@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:traveloka_flutter_clone/functions/DataFunction.dart';
 import 'package:traveloka_flutter_clone/pages/HomePage.dart';
+import 'package:traveloka_flutter_clone/pages/RegisterPage.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -72,6 +73,12 @@ class _InitialPageState extends State<InitialPage> {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context)=> const HomePage())
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context)=> const RegisterPage())
       );
     }
   } 
