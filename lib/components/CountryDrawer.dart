@@ -1,13 +1,13 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:traveloka_flutter_clone/constants/ThemeColors.dart';
 
 class CountryDrawer extends StatefulWidget {
   final bool isLoading;
   final double defaultWidth;
+  final double height;
   final int chosenIndex;
   final int drawerIncrement;
   final dynamic data;
@@ -16,6 +16,7 @@ class CountryDrawer extends StatefulWidget {
     Key? key,
     required this.isLoading,
     required this.defaultWidth,
+    required this.height,
     required this.drawerIncrement,
     required this.chosenIndex,
     required this.data,
@@ -37,6 +38,17 @@ class _CountryDrawerState extends State<CountryDrawer> {
 
   bool isReadyToHide= false;
   bool higherDrawer= false;
+
+  @override
+  void initState() {
+    initializePeriodicInspection();
+    setState(() {
+      setState(() {
+      defaultDrawerHeight= max(3*widget.height/4, 300);
+    });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -218,56 +230,61 @@ class _CountryDrawerState extends State<CountryDrawer> {
       widgetList.add(
         Container(
             height: 1,
-            width: widget.defaultWidth-50,
-            margin: const EdgeInsets.only(bottom: 15, top: 10),
+            width: widget.defaultWidth,
             color: Colors.black12
         ),
       );
       widgetList.add(
-        Container(
-          height: 50,
-          width: widget.defaultWidth,
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          color: widget.chosenIndex==i? ThemeColors().main12 : Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                height: 30,
-                child: Row(
-                  children: [
-                    widget.data.type=="country"? Container(
-                      height: 25,
-                      width: 25,
-                      margin: const EdgeInsets.only(bottom: 5, right: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        border: Border.all(width: 1, color: Colors.black12),
-                        image: DecorationImage(
-                          image: AssetImage(widget.data.flagImages[i]),
-                          fit: BoxFit.cover
+        GestureDetector(
+          onTap: () {
+            widget.stateFunction(i);
+            closeDrawer();
+          },
+          child: Container(
+            height: 50,
+            width: widget.defaultWidth,
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            color: widget.chosenIndex==i? ThemeColors().main12 : Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      widget.data.type=="country"? Container(
+                        height: 25,
+                        width: 25,
+                        margin: const EdgeInsets.only(bottom: 5, right: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(3),
+                          border: Border.all(width: 1, color: Colors.black12),
+                          image: DecorationImage(
+                            image: AssetImage(widget.data.flagImages[i]),
+                            fit: BoxFit.cover
+                          )
+                        ),
+                      ) : const SizedBox(),
+                      Container(
+                        height: 25,
+                        margin: const EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          widget.data.names[i], 
+                          style: const TextStyle(fontSize: 17)
                         )
                       ),
-                    ) : const SizedBox(),
-                    Container(
-                      height: 25,
-                      margin: const EdgeInsets.only(bottom: 5),
-                      child: Text(
-                        widget.data.names[i], 
-                        style: const TextStyle(fontSize: 17)
-                      )
-                    ),
-                  ],
-                )
-              ),
-              i==widget.chosenIndex? SizedBox(
-                height: 30,
-                width: 25,
-                child: Center(
-                  child: Icon(Icons.check, color: ThemeColors().main)
-                )
-              ) : const SizedBox()
-            ],
+                    ],
+                  )
+                ),
+                i==widget.chosenIndex? SizedBox(
+                  height: 30,
+                  width: 25,
+                  child: Center(
+                    child: Icon(Icons.check, color: ThemeColors().main)
+                  )
+                ) : const SizedBox()
+              ],
+            )
           )
         )
       );
@@ -295,12 +312,13 @@ class _CountryDrawerState extends State<CountryDrawer> {
     });
   }
 
-  Future<void> initializePeriodicInspection(var size) async{
+  Future<void> initializePeriodicInspection() async{
     while(true) {
+      debugPrint("localDrawerIncrement= $localDrawerIncrement, widget.drawerIncrement= ${widget.drawerIncrement}");
       if(widget.drawerIncrement>localDrawerIncrement) {
         FocusScope.of(context).requestFocus(FocusNode());
         setState(() {
-          containerHeight= size.height;
+          containerHeight= widget.height;
           localDrawerIncrement= widget.drawerIncrement;
         });
         while(widget.isLoading || !scrollController.hasClients) {
@@ -312,7 +330,7 @@ class _CountryDrawerState extends State<CountryDrawer> {
             curve: Curves.easeInOut
         );
       }
-      await Future.delayed(const Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 500));
     }
   }
 }

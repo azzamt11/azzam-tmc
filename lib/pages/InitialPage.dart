@@ -33,6 +33,7 @@ class _InitialPageState extends State<InitialPage> {
     return Container(
       height: size.height,
       width: defaultWidth,
+      padding: const EdgeInsets.only(bottom: 15),
       color: const Color.fromRGBO(27, 160, 226, 1),
       child: Stack(
         children: [
@@ -40,6 +41,7 @@ class _InitialPageState extends State<InitialPage> {
             child: Container(
               height: 130,
               width: 130,
+              margin: const EdgeInsets.only(bottom: 25),
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("images/travelokaLogo.png")
