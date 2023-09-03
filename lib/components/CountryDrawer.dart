@@ -43,9 +43,7 @@ class _CountryDrawerState extends State<CountryDrawer> {
   void initState() {
     initializePeriodicInspection();
     setState(() {
-      setState(() {
-      defaultDrawerHeight= max(3*widget.height/4, 300);
-    });
+      defaultDrawerHeight= (70+ 51*widget.data.names.length).toDouble();
     });
     super.initState();
   }
@@ -156,7 +154,7 @@ class _CountryDrawerState extends State<CountryDrawer> {
                       "Your Prefered ${widget.data.type== "country"? "Country" : "Language"}",
                       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     SizedBox(
                       height: defaultDrawerHeight- 75,
                       width: widget.defaultWidth,
@@ -316,6 +314,9 @@ class _CountryDrawerState extends State<CountryDrawer> {
     while(true) {
       debugPrint("localDrawerIncrement= $localDrawerIncrement, widget.drawerIncrement= ${widget.drawerIncrement}");
       if(widget.drawerIncrement>localDrawerIncrement) {
+        setState(() {
+          defaultDrawerHeight= (100+ 51*widget.data.names.length).toDouble();
+        });
         FocusScope.of(context).requestFocus(FocusNode());
         setState(() {
           containerHeight= widget.height;

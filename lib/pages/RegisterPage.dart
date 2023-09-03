@@ -53,9 +53,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Positioned(
                       top: -25,
+                      left: -10,
                       child: Container(
                         height: 300,
-                        width: defaultWidth,
+                        width: defaultWidth+ 10,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage("images/panorama.jpg"),
@@ -83,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Stack(
                           children: [
                             Positioned(
-                              top: 230,
+                              top: 240,
                               left: 15,
                               child: SizedBox(
                                 child: Column(
@@ -124,7 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
               height: size.height,
               drawerIncrement: drawerIncrement,
               chosenIndex: isChosingCountry? chosenCountry: chosenLang,
-              data: countries,
+              data: isChosingCountry? countries: languages,
               stateFunction: (i) {
                 setState(() {
                   isChosingCountry? chosenCountry= i : chosenLang= i;
@@ -260,7 +261,7 @@ class _RegisterPageState extends State<RegisterPage> {
               color: ThemeColors().main
             ),
             child: const Center(
-              child: Text("Lanjutkan", style: TextStyle(fontSize: 15, color: Colors.white))
+              child: Text("Lanjutkan", style: TextStyle(fontSize: 16, color: Colors.white))
             )
           )
         )
@@ -301,13 +302,13 @@ class ClipPathClass extends CustomClipper<Path> {
     var path = Path();
     path.lineTo(0.0, size.height);
     path.lineTo(min(size.width, 430), size.height);
-    path.lineTo(min(size.width, 430), 130);
+    path.lineTo(min(size.width, 430), 110);
 
-    var secondControlPoint = const Offset(200, 200);
-    var secondPoint = const Offset(0.0, 230);
+    var secondControlPoint = const Offset(200, 180);
+    var secondPoint = const Offset(0.0, 210);
     path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
       secondPoint.dx, secondPoint.dy);
-    path.lineTo(0.0, 260);
+    path.lineTo(0.0, 240);
     path.close();
 
     return path;
