@@ -19,65 +19,114 @@ class _IntroPageState extends State<IntroPage> {
     );
   }
 
-  Widget getBody(double defaultWidth, var size) {
-    return Container(
+  Widget getBody(double defaultWidth, size) {
+    return SizedBox(
+      width: defaultWidth,
       height: size.height,
-      width: defaultWidth,
-      child: Column(
+      child: Stack(
         children: [
-          viewPage(defaultWidth, size),
-          bottomWidget(defaultWidth, size)
+          NewViewPage(defaultWidth: defaultWidth),
+          indicatorWidget(defaultWidth),
+          drawer(defaultWidth)
         ],
-      )
+      ) 
     );
   }
 
-  Widget viewPage(double defaultWidth, var size) {
-    return Container(
-      height: size.height- 80,
+  Widget indicatorWidget(double defaultWidth) {
+    return SizedBox(
+      height: 70,
       width: defaultWidth,
-      color: Colors.white,
-    );
-  }
-
-  Widget bottomWidget(double defaultWidth, var size) {
-    return Container(
-      height: 80,
-      width: defaultWidth,
-      color: Colors.white,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          button("Lewati"),
-          indicator(),
-          button("Lanjut")
+          bar(0, defaultWidth),
+          bar(1, defaultWidth),
+          bar(2, defaultWidth),
+          close()
+        ],
+      ),
+    );
+  }
+
+  Widget drawer(double defaultWidth) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: 200,
+        width: defaultWidth,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+          color: Colors.white,
+        ),
+      )
+    );
+  }
+
+  Widget bar(int index, double defaultWidth) {
+    double param= 0;
+    double barWidth= defaultWidth/3- 20;
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 3),
+      height: 5,
+      width: barWidth,
+      child: Stack(
+        children: [
+          Container(
+            height: 5,
+            width: barWidth,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2.5),
+              color: Colors.white
+            ),
+          ),
+          Positioned(
+            left: 0,
+            child: Container(
+              height: 5,
+              width: barWidth*param,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(2.5),
+                color: ThemeColors().main
+              ),
+            ),
+          )
         ],
       )
     );
   }
 
-  Widget button(String text) {
-    return InkWell(
+  Widget close() {
+    return GestureDetector(
       onTap: () {
-
+        debugPrint("close function si in progress");
       },
-      splashColor: Colors.black12,
-      child: SizedBox(
-        height: 50,
-        width: 120,
+      child: const SizedBox(
+        height: 25,
+        width: 25,
         child: Center(
-          child: Text(text, style: TextStyle(color: ThemeColors().main, fontSize: 20)),
+          child: Icon(Icons.close, size: 20, color: Colors.white)
         )
       )
     );
   }
+}
 
-  Widget indicator() {
-    return Container(
-      height: 50,
-      width: 100,
-      color: Colors.white
-    );
+class NewViewPage extends StatefulWidget {
+  final double defaultWidth;
+  const NewViewPage({super.key, required this.defaultWidth});
+
+  @override
+  State<NewViewPage> createState() => _NewViewPageState();
+}
+
+class _NewViewPageState extends State<NewViewPage> {
+  @override
+  Widget build(BuildContext context) {
+    return const Text("This is ViewPage");
   }
 }
