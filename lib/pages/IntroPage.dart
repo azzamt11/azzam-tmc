@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:traveloka_flutter_clone/constants/ThemeColors.dart';
 
 class IntroPage extends StatefulWidget {
   final double defaultWidth;
@@ -10,6 +9,10 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
+  PageController controller= PageController();
+
+  List<double> progresses= [0, 0, 0];
+
   @override
   Widget build(BuildContext context) {
     var size= MediaQuery.of(context).size;
@@ -25,7 +28,7 @@ class _IntroPageState extends State<IntroPage> {
       height: size.height,
       child: Stack(
         children: [
-          NewViewPage(defaultWidth: defaultWidth),
+          NewViewPage(defaultWidth: defaultWidth, controller: controller),
           indicatorWidget(defaultWidth),
           drawer(defaultWidth)
         ],
@@ -68,35 +71,40 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   Widget bar(int index, double defaultWidth) {
-    double param= 0;
     double barWidth= defaultWidth/3- 20;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 3),
-      height: 5,
-      width: barWidth,
-      child: Stack(
-        children: [
-          Container(
-            height: 5,
-            width: barWidth,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2.5),
-              color: Colors.white
-            ),
-          ),
-          Positioned(
-            left: 0,
-            child: Container(
-              height: 5,
-              width: barWidth*param,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(2.5),
-                color: ThemeColors().main
+    return  TweenAnimationBuilder<double>(
+      tween: Tween<double>(begin: 0, end: progresses[index]),
+      duration: const Duration(seconds: 5),
+      builder:(BuildContext context, double param, Widget? child) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 3),
+          height: 5,
+          width: barWidth,
+          child: Stack(
+            children: [
+              Container(
+                height: 5,
+                width: barWidth,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2.5),
+                  color: Colors.black12
+                ),
               ),
-            ),
+              Positioned(
+                left: 0,
+                child: Container(
+                  height: 5,
+                  width: barWidth*param,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(2.5),
+                    color: Colors.white
+                  ),
+                ),
+              )
+            ],
           )
-        ],
-      )
+        );
+      },
     );
   }
 
@@ -118,15 +126,89 @@ class _IntroPageState extends State<IntroPage> {
 
 class NewViewPage extends StatefulWidget {
   final double defaultWidth;
-  const NewViewPage({super.key, required this.defaultWidth});
+  final PageController controller;
+  const NewViewPage({super.key, required this.defaultWidth, required this.controller});
 
   @override
   State<NewViewPage> createState() => _NewViewPageState();
 }
 
 class _NewViewPageState extends State<NewViewPage> {
+  int currentIndex= 0;
+
   @override
   Widget build(BuildContext context) {
-    return const Text("This is ViewPage");
+    var size= MediaQuery.of(context).size;
+    return Stack(
+        alignment: Alignment.center,
+        children: [
+          PageView(
+            controller: widget.controller,
+            onPageChanged: (index){
+              setState(() {
+                currentIndex= index;
+              });
+            },
+            children: [
+              introTab(size, widget.defaultWidth, 0),
+              introTab(size, widget.defaultWidth, 1),
+              introTab(size, widget.defaultWidth, 2),
+            ],
+          ),
+          Positioned(
+            right: 0,
+            top: 150,
+            child: SizedBox(
+              height: size.height,
+              width: 70,
+              child: GestureDetector(
+                onPanUpdate: (details) async{
+                  if (details.delta.dx > 50) {
+                    widget.controller.nextPage(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeIn
+                    );
+                  }
+                },
+                child: SizedBox(
+                  height: size.height,
+                  width: 65,
+                )
+              )
+            )
+          ),
+          Positioned(
+              left: 0,
+              top: 150,
+              child: GestureDetector(
+                  onPanUpdate: (details) async{
+                    if (details.delta.dx < -50) {
+                      widget.controller.previousPage(
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeIn
+                      );
+                    }
+                  },
+                  child: SizedBox(
+                    height: size.height,
+                    width: 65,
+                  )
+              )
+          )
+        ],
+      );
+  }
+
+  Widget introTab(var size, double defaultWidth, int index) {
+    return Container(
+      height: size.height,
+      width: defaultWidth,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("images/introImage_$index.png"),
+          fit: BoxFit.cover
+        )
+      )
+    );
   }
 }
