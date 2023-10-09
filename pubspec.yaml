@@ -73,6 +73,9 @@ flutter:
     - images/global_flag.svg
     - images/philipine_flag.svg
     - images/vietnam_flag.svg
+    - images/introImage_0.jpg
+    - images/introImage_1.jpg
+    - images/introImage_2.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

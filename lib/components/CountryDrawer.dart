@@ -312,7 +312,6 @@ class _CountryDrawerState extends State<CountryDrawer> {
 
   Future<void> initializePeriodicInspection() async{
     while(true) {
-      debugPrint("localDrawerIncrement= $localDrawerIncrement, widget.drawerIncrement= ${widget.drawerIncrement}");
       if(widget.drawerIncrement>localDrawerIncrement) {
         setState(() {
           defaultDrawerHeight= (100+ 51*widget.data.names.length).toDouble();
@@ -331,7 +330,7 @@ class _CountryDrawerState extends State<CountryDrawer> {
             curve: Curves.easeInOut
         );
       }
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 1000));
     }
   }
 }
