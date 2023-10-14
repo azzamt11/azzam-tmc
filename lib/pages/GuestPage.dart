@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class GuestPage extends StatefulWidget {
+  const GuestPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<GuestPage> createState() => _GuestPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _GuestPageState extends State<GuestPage> {
   @override
   Widget build(BuildContext context) {
     var size= MediaQuery.of(context).size;

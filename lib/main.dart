@@ -14,10 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size= MediaQuery.of(context).size;
-    return getFrame(size);
+    double defaultWidth= min(size.width, 420);
+    return getFrame(size, defaultWidth);
   }
 
-  Widget getFrame(var size) {
+  Widget getFrame(var size, double defaultWidth) {
     return Container(
       height: size.height,
       width: size.width,
@@ -25,10 +26,10 @@ class MyApp extends StatelessWidget {
       child: Center(
         child: SizedBox(
           height: size.height,
-          width: min(size.width, 420),
-          child: const MaterialApp(
+          width: defaultWidth,
+          child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: InitialPage(),
+            home: InitialPage(defaultWidth: defaultWidth),
           )
         )
       )

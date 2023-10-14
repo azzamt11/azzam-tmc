@@ -2,11 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:traveloka_flutter_clone/functions/DataFunction.dart';
-import 'package:traveloka_flutter_clone/pages/HomePage.dart';
+import 'package:traveloka_flutter_clone/pages/GuestPage.dart';
 import 'package:traveloka_flutter_clone/pages/RegisterPage.dart';
 
 class InitialPage extends StatefulWidget {
-  const InitialPage({super.key});
+  final double defaultWidth;
+  const InitialPage({super.key, required this.defaultWidth});
 
   @override
   State<InitialPage> createState() => _InitialPageState();
@@ -24,7 +25,7 @@ class _InitialPageState extends State<InitialPage> {
   Widget build(BuildContext context) {
     var size= MediaQuery.of(context).size;
     return Scaffold(
-      body: getBody(size, min(size.width, 420)),
+      body: getBody(size, widget.defaultWidth),
       resizeToAvoidBottomInset: false,
     );
   }
@@ -74,7 +75,7 @@ class _InitialPageState extends State<InitialPage> {
       // ignore: use_build_context_synchronously
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context)=> const HomePage())
+        MaterialPageRoute(builder: (context)=> const GuestPage())
       );
     } else {
       // ignore: use_build_context_synchronously

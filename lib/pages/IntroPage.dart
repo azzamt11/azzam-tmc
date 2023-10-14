@@ -61,7 +61,7 @@ class _IntroPageState extends State<IntroPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: SizedBox(
-        height: 70,
+        height: 35,
         width: defaultWidth,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -84,6 +84,7 @@ class _IntroPageState extends State<IntroPage> {
       child: Container(
         height: size.height- topPosition,
         width: defaultWidth,
+        padding: const EdgeInsets.only(top: 25),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
@@ -92,7 +93,6 @@ class _IntroPageState extends State<IntroPage> {
           color: Colors.white,
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
@@ -120,7 +120,7 @@ class _IntroPageState extends State<IntroPage> {
         },
         splashColor: Colors.black12,
         child: Container(
-          height: 35,
+          height: 45,
           width: defaultWidth- 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
@@ -161,7 +161,7 @@ class _IntroPageState extends State<IntroPage> {
         child: Stack(
           children: [
             Positioned(
-              top: 20,
+              top: 15,
               child: Container(
               height: 5,
               width: barWidth,
@@ -173,7 +173,7 @@ class _IntroPageState extends State<IntroPage> {
             ),
             Positioned(
               left: 0,
-              top: 20,
+              top: 15,
               child: Container(
                 height: 5,
                 width: barWidth*(
