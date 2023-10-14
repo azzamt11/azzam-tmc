@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final double defaultWidth;
+  const HomePage({super.key, required this.defaultWidth});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,7 +20,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget getBody(var size) {
     return Container(
-      
+      height: size.height,
+      width: widget.defaultWidth,
+      color: Colors.white,
+      child: const Center(
+        child: Text("This is HomePage")
+      )
     );
   }
 }

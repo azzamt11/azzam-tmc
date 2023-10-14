@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traveloka_flutter_clone/constants/ThemeColors.dart';
-import 'package:traveloka_flutter_clone/pages/NewPage.dart';
+import 'package:traveloka_flutter_clone/pages/HomePage.dart';
 
 class IntroPage extends StatefulWidget {
   final double defaultWidth;
@@ -114,7 +114,7 @@ class _IntroPageState extends State<IntroPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context)=> NewPage(defaultWidth: defaultWidth)
+              builder: (context)=> HomePage(defaultWidth: defaultWidth)
             )
           );
         },
@@ -201,7 +201,7 @@ class _IntroPageState extends State<IntroPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context)=> NewPage(defaultWidth: defaultWidth)
+            builder: (context)=> HomePage(defaultWidth: defaultWidth)
           )
         );
       },
